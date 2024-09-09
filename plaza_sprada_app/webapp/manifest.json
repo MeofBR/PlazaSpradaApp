@@ -1,0 +1,138 @@
+{
+    "_version": "1.53.0",
+    "sap.app": {
+        "id": "sap.com.plazaspradaapp",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.13.2",
+            "toolsId": "5cfd207a-421e-41ae-99a4-2c73b1661d42"
+        },
+        "dataSources": {
+            "ZPROJ_SPRADA_SRV_Annotation": {
+                "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZPROJ_SPRADA_ANNO_MDL',Version='0001')/$value/",
+                "type": "ODataAnnotation",
+                "settings": {
+                    "localUri": "localService/ZPROJ_SPRADA_SRV_Annotation.xml"
+                }
+            },
+            "ZPROJ_SPRADA_SRV": {
+                "uri": "/sap/opu/odata/sap/ZPROJ_SPRADA_SRV",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "ZPROJ_SPRADA_SRV_Annotation"
+                    ],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        },
+        "fullWidth": true
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.114.0",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "sap.com.plazaspradaapp.i18n.i18n"
+                }
+            },
+            "": {
+                "preload": true,
+                "dataSource": "ZPROJ_SPRADA_SRV",
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false,
+                    "metadataUrlParams": {
+                        "sap-value-list": "none"
+                    }
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "sap.com.plazaspradaapp.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RoutePlazaSpradaApp",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetPlazaSpradaApp"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetPlazaSpradaApp": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "PlazaSpradaApp",
+                    "viewName": "PlazaSpradaApp"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "sap.com.plazaspradaapp.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    }
+}

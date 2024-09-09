@@ -1,0 +1,44 @@
+specVersion: "3.1"
+metadata:
+  name: sap.com.plazaspradaapp
+type: application
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://ui5.sap.com
+        backend:
+          - path: /sap
+            url: https://ndc-srvhana.opus-idc.com.br:8100
+            client: "250"
+          - path: /sap
+            url: https://ndc-srvhana.opus-idc.com.br:8100
+            client: "250"
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: sap-fe-mockserver
+      beforeMiddleware: csp
+      configuration:
+        mountPath: /
+        services:
+          - urlPath: /sap/opu/odata/sap/ZCDS_JOIN_SPFLI_SCARR_CDS
+            generateMockData: true
+            metadataXmlPath: ./webapp/localService/metadata.xml
+            mockdataRootPath: ./webapp/localService/data
+          - urlPath: /sap/opu/odata/sap/ZPROJ_SPRADA_SRV
+            metadataPath: ./webapp/localService/metadata.xml
+            mockdataPath: ./webapp/localService/mockdata
+            generateMockData: true
+        annotations:
+          - localPath: ./webapp/localService/ZPROJ_SPRADA_SRV_Annotation.xml
+            urlPath: /sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZPROJ_SPRADA_ANNO_MDL',Version='0001')/$value/

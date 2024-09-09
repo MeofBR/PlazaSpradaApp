@@ -1,0 +1,121 @@
+<mvc:View xmlns:table="sap.ui.table"
+	xmlns="sap.ui.comp.smartfilterbar"
+	xmlns:f="sap.f"
+	xmlns:m="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:form="sap.ui.comp.smartform" 
+	xmlns:smartField="sap.ui.comp.smartfield" 
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	controllerName="sap.com.plazaspradaapp.controller.PlazaSpradaApp"
+	height="100%">
+
+	<f:DynamicPage id="dynamicPage" fitContent="true" title="{i18n>appTitle}">	
+		<f:header>
+			<f:DynamicPageHeader >			
+				<SmartFilterBar
+					id="smartFilterBar"
+					entitySet="ZCDS_I_USER_PLAZA"
+					 filterContainerWidth="200px" 
+					 showClearOnFB="true" 
+					 showMessages="true" 
+					 persistencyKey="CTFFilterBar" 					
+					>    	
+					<controlConfiguration>
+						<ControlConfiguration
+							key="DataCadastro"
+							visibleInAdvancedArea="true"				
+							conditionType="sap.ui.comp.config.condition.DateRangeType"
+						/>
+
+                        <ControlConfiguration
+							key="DataReserva"
+							visibleInAdvancedArea="true"				
+							conditionType="sap.ui.comp.config.condition.DateRangeType"
+						/>
+						
+						<ControlConfiguration
+							key="Lifnr"
+							visibleInAdvancedArea="true"
+						/>
+						<ControlConfiguration
+							key="Nome"
+							visibleInAdvancedArea="true"                                                   
+						/>
+						<ControlConfiguration
+							key="Cep"
+							visibleInAdvancedArea="true"                                                   
+						/>
+						<ControlConfiguration
+							key="Apto"
+							visibleInAdvancedArea="true"                                                   
+						/>
+						<ControlConfiguration
+							key="Estado"
+							visibleInAdvancedArea="true"                                                   
+						/>
+						<ControlConfiguration
+							key="CPF"
+							visibleInAdvancedArea="true"                                                   
+						/>
+						<ControlConfiguration
+							key="AreaReservada"
+							visibleInAdvancedArea="true"                                                   
+						/>						
+					</controlConfiguration>										
+					<layoutData>
+						<m:FlexItemData shrinkFactor="0"/>
+					</layoutData>
+				</SmartFilterBar>
+                <m:Toolbar>
+                    <m:ToolbarSpacer/>
+					<m:Button
+						text="Novo Agendamento"
+						icon="sap-icon://add"
+						type="Emphasized"
+						press="onCreateAgendamento" />
+				</m:Toolbar>
+			</f:DynamicPageHeader>           
+		</f:header>
+        
+		<f:content>        
+			<smartTable:SmartTable
+				id="smartTable"
+				entitySet="ZCDS_I_USER_PLAZA"
+				smartFilterId="smartFilterBar"
+				tableType="Table"													
+				header="Reservas - Plaza Sprada"
+				persistencyKey="CTFTable" 
+                initiallyVisibleFields="Lifnr,Nome,Apto,Estado,DataCadastro,CPF,DataReserva ,AreaReservada"
+				enableAutoColumnWidth="true"				
+				>				
+			</smartTable:SmartTable>
+		</f:content>
+	</f:DynamicPage>
+
+     <!-- Definição do Dialog -->
+    <m:Dialog id="createAgendamentoDialog" title="Novo Agendamento" stretch="false" horizontalScrolling="false">
+        <m:VBox class="sapUiSmallMargin">
+            <m:Label text="Selecione a Data" class="sapUiTinyMarginBottom"/>
+            <m:DatePicker id="reservaDatePicker" class="sapUiSmallMarginBottom"/>
+
+            <m:Label text="Selecione a Área Comum" class="sapUiTinyMarginBottom"/>
+            <m:Select id="selectAreaComum" class="sapUiSmallMarginBottom">
+                <m:items>
+                    <core:Item key="Churrasqueira01" text="Churrasqueira 01"/>
+                    <core:Item key="Churrasqueira02" text="Churrasqueira 02"/>
+                    <core:Item key="Churrasqueira03" text="Churrasqueira 03"/>
+                    <core:Item key="Churrasqueira04" text="Churrasqueira 04"/>
+                    <core:Item key="SalaoGourmet" text="Salão Gourmet"/>
+                    <core:Item key="SalaoFestas" text="Salão de Festas"/>
+                    <core:Item key="SalaoInfantil" text="Salão Infantil"/>
+                </m:items>
+            </m:Select>
+            <m:HBox justifyContent="SpaceBetween" class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+            <m:Button text="Reservar" type="Emphasized" press="onReservar"/>
+            <m:Button text="Cancelar" press="onCancelarDialog"/>
+        </m:HBox>
+        </m:VBox>   
+    </m:Dialog>
+    
+</mvc:View>
